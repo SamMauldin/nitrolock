@@ -215,14 +215,35 @@ else
 end
 
 if fs.exists("/.nitrolock") then
-  local fh = fs.open("/.nitrolock", "r")
-  local pass = fh.readLine()
-  local door = fh.readLine()
+ 	local fh = fs.open("/.nitrolock", "r")
+ 	local pass = fh.readLine()
+ 	local door = fh.readLine()
   local card = fh.readLine()
   fh.close()
-  print(pass)
-  print(door)
-  print(card)
+  while true do
+  	term.clear()
+  term.setCursorPos(1, 1)
+  print("Hello! Welcome to Nitro-Lock.")
+  print("Press any key to access the admin panel, or swipe your card to enter")
+   local e, p = os.pullEvent()
+   if e == "key" then
+   	print("Nitro-Lock Admin panel")
+   	write("Password:")
+   	if sha256(read("*")) == pass then
+   		
+   	else
+   			print("Wrong password")
+   			sleep(1)
+   			
+   	end
+  	elseif e == "mag_swipe" then
+  		if p == pass then
+     
+    else
+     
+    end
+   end
+  end
 else
   term.clear()
   term.setCursorPos(1, 1)
