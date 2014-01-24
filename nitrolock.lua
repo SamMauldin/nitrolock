@@ -193,7 +193,7 @@ local function sha256(msg)
 end
 
 -- Nitro-Lock
-local url = ""
+local url = "https://raw2.github.com/Sxw1212/nitrolock/master/"
 os.pullEvent=os.pullEventRaw
 term.clear()
 term.setCursorPos(1, 1)
