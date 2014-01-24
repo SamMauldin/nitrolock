@@ -202,48 +202,48 @@ print("Nitro-Lock Updating")
 
 local nv = http.get(url .. "version")
 
-if nv.readAll() ~= "3" then
-  print("New version available, updating")
-  local nc = http.get(url .. "nitrolock.lua")
-  local fh = fs.open("/startup", "w")
-  fh.write(nc.readAll())
-  fh.close()
-  print("Updated, restarting.")
-  os.reboot()
+if nv.readAll() ~= "4" then
+	print("New version available, updating")
+	local nc = http.get(url .. "nitrolock.lua")
+	local fh = fs.open("/startup", "w")
+	fh.write(nc.readAll())
+	fh.close()
+	print("Updated, restarting.")
+	os.reboot()
 else
-  print("Nitro-Lock up to date")
+	print("Nitro-Lock up to date")
 end
 
 if fs.exists("/.nitrolock") then
  	local fh = fs.open("/.nitrolock", "r")
  	local pass = fh.readLine()
  	local door = fh.readLine()
-  local card = fh.readLine()
-  fh.close()
-  while true do
-  	term.clear()
-  term.setCursorPos(1, 1)
-  print("Hello! Welcome to Nitro-Lock.")
-  print("Press any key to access the admin panel, or swipe your card to enter")
-   local e, p = os.pullEvent()
-   if e == "key" then
-   	print("Nitro-Lock Admin panel")
-   	write("Password:")
-   	if sha256(read("*")) == pass then
+	local card = fh.readLine()
+	fh.close()
+	while true do
+		term.clear()
+		term.setCursorPos(1, 1)
+		print("Hello! Welcome to Nitro-Lock.")
+		print("Press any key to access the admin panel, or swipe your card to enter")
+		local e, p = os.pullEvent()
+		if e == "key" then
+			print("Nitro-Lock Admin panel")
+			write("Password:")
+			if sha256(read("*")) == pass then
    		
-   	else
-   			print("Wrong password")
-   			sleep(1)
-   			
-   	end
-  	elseif e == "mag_swipe" then
-  		if p == pass then
-     
-    else
-     
-    end
-   end
-  end
+			else
+   				print("Wrong password")
+   				sleep(1)
+   			end
+   		elseif e == "mag_swipe" then
+   			if p == pass then
+   				rs.setOutput(door, true)
+   				sleep(3)
+   				rs.setOutput(door, false)
+   			else
+   				-- Insert mag light blink here
+   			end
+   		end
 else
   term.clear()
   term.setCursorPos(1, 1)
