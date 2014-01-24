@@ -1,4 +1,4 @@
-nitrolock
-=========
+Nitro-Lock
+==========
 
-Computercraft lock
+Computercraft Lock
