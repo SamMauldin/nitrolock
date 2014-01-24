@@ -202,7 +202,7 @@ print("Nitro-Lock Updating")
 
 local nv = http.get(url .. "version")
 
-if nv.readAll() ~= "4" then
+if nv.readAll() ~= "5" then
 	print("New version available, updating")
 	local nc = http.get(url .. "nitrolock.lua")
 	local fh = fs.open("/startup", "w")
@@ -244,6 +244,7 @@ if fs.exists("/.nitrolock") then
    				-- Insert mag light blink here
    			end
    		end
+   	end
 else
   term.clear()
   term.setCursorPos(1, 1)
