@@ -202,7 +202,7 @@ print("Nitro-Lock Updating")
 
 local nv = http.get(url .. "version")
 
-if nv.readAll() ~= "2" then
+if nv.readAll() ~= "3" then
   print("New version available, updating")
   local nc = http.get(url .. "nitrolock.lua")
   local fh = fs.open("/startup", "w")
@@ -217,8 +217,9 @@ end
 if fs.exists("/.nitrolock") then
   local fh = fs.open("/.nitrolock", "r")
   local pass = fh.readLine()
-  local door = fs.readLine()
-  local card = fs.readLine()
+  local door = fh.readLine()
+  local card = fh.readLine()
+  fh.close()
   print(pass)
   print(door)
   print(card)
