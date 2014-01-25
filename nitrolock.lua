@@ -1,4 +1,4 @@
-local version = "1.2.0"
+local version = "1.2.1"
 -- SHA by GravityScore
 
 --  
@@ -196,24 +196,40 @@ end
 -- Nitro-Lock
 local url = "https://raw2.github.com/Sxw1212/nitrolock/master/"
 os.pullEvent=os.pullEventRaw
-term.clear()
-term.setCursorPos(1, 1)
 
+function clear()
+	term.clear()
+	term.setCursorPos(1, 1)
+end
+
+function color(c)
+	if term.isColor() then
+		term.setTextColor(colors[c])
+	end
+end
+
+clear()
+
+c("orange")
 print("Nitro-Lock Updating")
 
 local nv = http.get(url .. "version")
 
 if not nv then
+	c("red")
 	print("Unable to fetch update")
 elseif nv.readAll() ~= version then
+	c("lime")
 	print("New version available, updating")
 	local nc = http.get(url .. "nitrolock.lua")
 	local fh = fs.open("/startup", "w")
 	fh.write(nc.readAll())
 	fh.close()
+	c("blue")
 	print("Updated, restarting.")
 	os.reboot()
 else
+	c("lime")
 	print("Up to date!")
 end
 
@@ -224,19 +240,25 @@ if fs.exists("/.nitrolock") then
 	local card = fh.readLine()
 	fh.close()
 	while true do
-		term.clear()
-		term.setCursorPos(1, 1)
+		clear()
+		color("lime")
 		print("Hello! Welcome to Nitro-Lock v" .. version)
+		print("")
+		color("blue")
 		print("Press any key to access the admin panel, or swipe your card to enter")
 		local e, p = os.pullEvent()
 		if e == "key" then
+			clear()
+			color("blue")
 			print("Nitro-Lock Admin panel")
+			color("white")
 			write("Password:")
 			if sha256(read("*")) == pass then
 				while true do
-					term.clear()
-					term.setCursorPos(1, 1)
+					clear()
+					color("blue")
    					print("Welcome to the admin panel.")
+   					color("orange")
    					print("[1] Make new card")
    					print("[2] Change password")
    					print("[3] Change door side")
@@ -245,35 +267,40 @@ if fs.exists("/.nitrolock") then
    					local e, p = os.pullEvent()
    					if e == "char" then
    						if p == "1" then
-   							term.clear()
-							term.setCursorPos(1, 1)
+   							clear()
+   							color("blue")
 							print("Making new card")
+							color("orange")
 							print("Please swipe")
 							peripheral.wrap(card).beginWrite(pass, "Nitro-Lock")
 							os.pullEvent("mag_write_done")
    						elseif p == "2" then
-   							term.clear()
-							term.setCursorPos(1, 1)
+   							clear()
+   							color("orange")
 							print("Changing password")
+							color("red")
 							print("All cards will be reset")
+							color("white")
 							write("Password:")
 							pass = sha256(read("*"))
 							local fh = fs.open("/.nitrolock", "w")
   							fh.write(pass .. "\n" .. door .. "\n" .. card)
   							fh.close()
    						elseif p == "3" then
-   							term.clear()
-							term.setCursorPos(1, 1)
+   							clear()
+   							color("blue")
 							print("Changing door side side")
+							color("white")
 							write("Side:")
 							door = read()
 							local fh = fs.open("/.nitrolock", "w")
   							fh.write(pass .. "\n" .. door .. "\n" .. card)
   							fh.close()
    						elseif p == "4" then
-   							term.clear()
-							term.setCursorPos(1, 1)
+   							clear()
+   							color("blue")
 							print("Changing reader side")
+							color("white")
 							write("Side:")
 							card = read()
 							local fh = fs.open("/.nitrolock", "w")
@@ -285,8 +312,8 @@ if fs.exists("/.nitrolock") then
    					end
    				end
 			else
-				term.clear()
-				term.setCursorPos(1, 1)
+				clear()
+				color("red")
    				print("Wrong password")
    				sleep(1)
    			end
@@ -306,24 +333,32 @@ if fs.exists("/.nitrolock") then
    		end
    	end
 else
-  term.clear()
-  term.setCursorPos(1, 1)
+  clear()
+  color("blue")
   print("Hello! Welcome to Nitro-Lock v" .. version)
   print("Please choose an admin password.")
+  color("white")
   write("Password:")
   local pass = sha256(read("*"))
+  color("blue")
   print("OK, now which side is the door?")
+  color("white")
   write("Side:")
   local door = read()
+  color("blue")
   print("Almost done! Which side is the magcard reader?")
+  color("white")
   write("Side:")
   local card = read()
   local fh = fs.open("/.nitrolock", "w")
   fh.write(pass .. "\n" .. door .. "\n" .. card)
   fh.close()
+  color("orange")
   print("Settings saved. Now swipe a blank magcard to make your first key.")
   peripheral.wrap(card).beginWrite(pass, "Nitro-Lock")
   os.pullEvent("mag_write_done")
+  color("lime")
   print("Done! Rebooting.")
+  sleep(1)
   os.reboot()
 end
