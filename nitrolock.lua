@@ -1,4 +1,4 @@
-local version = "1.1.1"
+local version = "1.2.0"
 -- SHA by GravityScore
 
 --  
@@ -203,7 +203,9 @@ print("Nitro-Lock Updating")
 
 local nv = http.get(url .. "version")
 
-if nv.readAll() ~= version then
+if not nv then
+	print("Unable to fetch update")
+elseif nv.readAll() ~= version then
 	print("New version available, updating")
 	local nc = http.get(url .. "nitrolock.lua")
 	local fh = fs.open("/startup", "w")
@@ -212,7 +214,7 @@ if nv.readAll() ~= version then
 	print("Updated, restarting.")
 	os.reboot()
 else
-	print("Nitro-Lock up to date")
+	print("Up to date!")
 end
 
 if fs.exists("/.nitrolock") then
