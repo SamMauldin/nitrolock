@@ -202,7 +202,7 @@ print("Nitro-Lock Updating")
 
 local nv = http.get(url .. "version")
 
-if nv.readAll() ~= "5" then
+if nv.readAll() ~= "1.1" then
 	print("New version available, updating")
 	local nc = http.get(url .. "nitrolock.lua")
 	local fh = fs.open("/startup", "w")
@@ -230,8 +230,60 @@ if fs.exists("/.nitrolock") then
 			print("Nitro-Lock Admin panel")
 			write("Password:")
 			if sha256(read("*")) == pass then
-   		
+				while true do
+					term.clear()
+					term.setCursorPos(1, 1)
+   					print("Welcome to the admin panel.")
+   					print("[1] Make new card")
+   					print("[2] Change password")
+   					print("[3] Change door side")
+   					print("[4] Change reader side")
+   					print("[5] Exit")
+   					local e, p = os.pullEvent()
+   					if e == "char" then
+   						if p == "1" then
+   							term.clear()
+							term.setCursorPos(1, 1)
+							print("Making new card")
+							print("Please swipe")
+							peripheral.wrap(card).beginWrite(pass, "Nitro-Lock")
+							os.pullEvent("mag_write_done")
+   						elseif p == "2" then
+   							term.clear()
+							term.setCursorPos(1, 1)
+							print("Changing password")
+							print("All cards will be reset")
+							write("Password:")
+							pass = sha256(read("*"))
+							local fh = fs.open("/.nitrolock", "w")
+  							fh.write(pass .. "\n" .. door .. "\n" .. card)
+  							fh.close()
+   						elseif p == "3" then
+   							term.clear()
+							term.setCursorPos(1, 1)
+							print("Changing door side side")
+							write("Side:")
+							door = read()
+							local fh = fs.open("/.nitrolock", "w")
+  							fh.write(pass .. "\n" .. door .. "\n" .. card)
+  							fh.close()
+   						elseif p == "4" then
+   							term.clear()
+							term.setCursorPos(1, 1)
+							print("Changing reader side")
+							write("Side:")
+							card = read()
+							local fh = fs.open("/.nitrolock", "w")
+  							fh.write(pass .. "\n" .. door .. "\n" .. card)
+  							fh.close()
+   						elseif p == "5" then
+   							os.reboot()
+   						end
+   					end
+   				end
 			else
+				term.clear()
+				term.setCursorPos(1, 1)
    				print("Wrong password")
    				sleep(1)
    			end
@@ -241,7 +293,12 @@ if fs.exists("/.nitrolock") then
    				sleep(3)
    				rs.setOutput(door, false)
    			else
-   				-- Insert mag light blink here
+   				for i = 1, 5 do
+   					sleep(0.1)
+   					peripheral.wrap(card).setInsertCardLight(true)
+   					sleep(0.1)
+   					peripheral.wrap(card).setInsertCardLight(false)
+   				end
    			end
    		end
    	end
