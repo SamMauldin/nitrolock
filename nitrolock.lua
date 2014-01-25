@@ -1,3 +1,4 @@
+local version = "1.1.1"
 -- SHA by GravityScore
 
 --  
@@ -202,7 +203,7 @@ print("Nitro-Lock Updating")
 
 local nv = http.get(url .. "version")
 
-if nv.readAll() ~= "1.1" then
+if nv.readAll() ~= version then
 	print("New version available, updating")
 	local nc = http.get(url .. "nitrolock.lua")
 	local fh = fs.open("/startup", "w")
@@ -223,7 +224,7 @@ if fs.exists("/.nitrolock") then
 	while true do
 		term.clear()
 		term.setCursorPos(1, 1)
-		print("Hello! Welcome to Nitro-Lock.")
+		print("Hello! Welcome to Nitro-Lock v" .. version)
 		print("Press any key to access the admin panel, or swipe your card to enter")
 		local e, p = os.pullEvent()
 		if e == "key" then
@@ -305,7 +306,7 @@ if fs.exists("/.nitrolock") then
 else
   term.clear()
   term.setCursorPos(1, 1)
-  print("Hello! Welcome to Nitro-Lock.")
+  print("Hello! Welcome to Nitro-Lock v" .. version)
   print("Please choose an admin password.")
   write("Password:")
   local pass = sha256(read("*"))
