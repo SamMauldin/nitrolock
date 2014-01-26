@@ -1,4 +1,4 @@
-local version = "1.2.5e"
+local version = "1.2.6"
 -- SHA by GravityScore
 
 --  
@@ -268,7 +268,8 @@ if fs.exists("/.nitrolock") then
    					print("[2] Change password")
    					print("[3] Change door side")
    					print("[4] Change reader side")
-   					print("[5] Exit")
+   					print("[5] Unlock door (without card)")
+   					print("[6] Exit")
    					local e, p = os.pullEvent()
    					if e == "char" then
    						if p == "1" then
@@ -311,7 +312,11 @@ if fs.exists("/.nitrolock") then
 							local fh = fs.open("/.nitrolock", "w")
   							fh.write(pass .. "\n" .. door .. "\n" .. card)
   							fh.close()
-   						elseif p == "5" then
+  						elseif p == "5" then
+  							rs.setOutput(side, true)
+  							sleep(3)
+  							rs.setOutput(side, false)
+   						elseif p == "6" then
    							os.reboot()
    						end
    					end
