@@ -1,4 +1,4 @@
-local build = "1"
+local build = "2"
 -- SHA by GravityScore
 
 --  
@@ -246,15 +246,18 @@ if fs.exists("/.nitrolock") then
 	while true do
 		clear()
 		color("lime")
-		print("Hello! Welcome to Nitro-Lock Build" .. build)
+		print("Hello! Welcome to Nitro-Lock Build " .. build)
 		print("")
 		color("blue")
-		print("Press any key to access the admin panel, or swipe your card to enter")
+		print("Press any key to access the Control Panel, or swipe your card to enter")
+		print("")
+		color("white")
+		print("Nitro-Lock by Sam Mauldin.")
 		local e, p = os.pullEvent()
 		if e == "key" then
 			clear()
 			color("blue")
-			print("Nitro-Lock Admin panel")
+			print("Nitro-Lock Control Panel")
 			color("white")
 			write("Password:")
 			local p = sha256(read("*"))
@@ -262,7 +265,7 @@ if fs.exists("/.nitrolock") then
 				while true do
 					clear()
 					color("blue")
-   					print("Welcome to the admin panel.")
+   					print("Nitro-Lock Control Panel Build " .. build)
    					color("orange")
    					print("[1] Make new card")
    					print("[2] Change password")
@@ -345,7 +348,7 @@ if fs.exists("/.nitrolock") then
 else
   clear()
   color("blue")
-  print("Hello! Welcome to Nitro-Lock Build" .. build)
+  print("Hello! Welcome to Nitro-Lock Build " .. build)
   print("Please choose an admin password.")
   color("white")
   write("Password:")
