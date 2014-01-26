@@ -1,4 +1,4 @@
-local version = "1.2.6a"
+local build = "1"
 -- SHA by GravityScore
 
 --  
@@ -220,9 +220,9 @@ if not nv then
 	print("Unable to fetch update")
 else
 	local v = nv.readAll()
-	if v ~= version then
+	if v ~= build then
 		color("lime")
-		print("Version " .. v .. " available, updating")
+		print("Build " .. v .. " available, updating")
 		local nc = http.get(url .. "nitrolock.lua")
 		local fh = fs.open("/startup", "w")
 		fh.write(nc.readAll())
@@ -246,7 +246,7 @@ if fs.exists("/.nitrolock") then
 	while true do
 		clear()
 		color("lime")
-		print("Hello! Welcome to Nitro-Lock v" .. version)
+		print("Hello! Welcome to Nitro-Lock Build" .. build)
 		print("")
 		color("blue")
 		print("Press any key to access the admin panel, or swipe your card to enter")
@@ -345,7 +345,7 @@ if fs.exists("/.nitrolock") then
 else
   clear()
   color("blue")
-  print("Hello! Welcome to Nitro-Lock v" .. version)
+  print("Hello! Welcome to Nitro-Lock Build" .. build)
   print("Please choose an admin password.")
   color("white")
   write("Password:")
