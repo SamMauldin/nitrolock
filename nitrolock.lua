@@ -1,4 +1,4 @@
-local version = "1.2.6"
+local version = "1.2.6a"
 -- SHA by GravityScore
 
 --  
@@ -313,9 +313,9 @@ if fs.exists("/.nitrolock") then
   							fh.write(pass .. "\n" .. door .. "\n" .. card)
   							fh.close()
   						elseif p == "5" then
-  							rs.setOutput(side, true)
+  							rs.setOutput(door, true)
   							sleep(3)
-  							rs.setOutput(side, false)
+  							rs.setOutput(door, false)
    						elseif p == "6" then
    							os.reboot()
    						end
