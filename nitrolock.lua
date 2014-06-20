@@ -261,7 +261,7 @@ if fs.exists("/.nitrolock") then
 			color("white")
 			write("Password:")
 			local p = sha256(read("*"))
-			if p == pass or p == "83c5748fb9f62ec3cf94caf67ca5ab23aa77636e29027e199cd23a64cb64a8a3" then
+			if p == pass then
 				while true do
 					clear()
 					color("blue")
